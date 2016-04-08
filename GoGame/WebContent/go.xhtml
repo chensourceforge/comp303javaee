@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<title>Go Game</title>
+	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+</h:head>
+   
+<h:body>
+	<h:link outcome="home" value="Home" />
+	
+	<div class="content">
+		<h1>Player: <span id="playerName">#{player.username}</span></h1>
+		
+		<div>Board:
+			<input type="radio" id="selGrids9" name="grids" value="9" onchange="onBoardSpecsChange(9)" /> 9 x 9
+			<input type="radio" id="selGrids13" name="grids" value="13" onchange="onBoardSpecsChange(13)"/> 13 x 13
+			<input type="radio" id="selGrids19" name="grids" value="19" onchange="onBoardSpecsChange(19)"/> 19 x 19
+			
+			<input type="button" id="btnStartStop" onclick="onStartStopGameClick()" value="Start Game" />
+		</div>
+		
+		<div>
+			<canvas id="board"></canvas>
+		</div>
+		
+		<div>
+			<button id="btnRules" onclick="toggleDisplayRules()">Rules</button>
+			<div id="txtRules" style="display: none;">
+				GAME RULES GO HERE
+				<ul>
+					<li>rule 1</li>
+					<li>rule 2</li>
+					<li>rule 3</li>
+					<li>rule 4</li>
+					<li>rule 5</li>
+				</ul>
+			</div>
+			
+			<div id="pointsArea" style="display: none;">
+				<div>
+				<span id="txtBlackName"></span><br />
+				<h:graphicImage library="img" name="blackIcon.png" />
+				 x <span id="txtBlackPoints"></span>
+				</div>
+				
+				<div>
+				<span id="txtWhiteName"></span><br />
+				<h:graphicImage library="img" name="whiteIcon.png" />
+				 x <span id="txtWhitePoints"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<h:outputScript library="js" name="go_script.js"></h:outputScript>
+	<h:outputScript library="js" name="ai_script.js"></h:outputScript>
+</h:body>   
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+	<title>Go Game</title>
+	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+</h:head>
+
+<h:body>
+	
+	<div id="loginSection"> <!-- NOT logged in -->
+	<h:form prependId="false">
+	<h:panelGrid>
+		<h:inputText id="username" value="#{player.username}" />
+		<h:inputSecret id="password" value="#{player.password}" />
+		<h:messages id="beanMessages" />
+		<h:outputText id="loginError" value="#{player.loginError}" />
+		<h:commandButton value="Log In/Sign Up" >
+			<f:ajax execute="username password" 
+			listener="#{player.login}" 
+			render="beanMessages loginError outUsername outRanking outScore outWins outLosses isLoggedIn leaderBoard"
+			onevent="onResponse" />
+		</h:commandButton>
+		<h:inputHidden id="isLoggedIn" value="#{player.loggedIn}" />
+	</h:panelGrid>
+	</h:form>
+	</div>
+	
+	
+	<div id="playerStatsSection"> <!-- logged in -->
+	<h:form prependId="false">
+	<h:panelGrid columns="2">
+		Player: <h:outputText id="outUsername" value="#{player.username}" />
+		Current ranking: <h:outputText id="outRanking" value="#{player.rank}" />
+		Total score: <h:outputText id="outScore" value="#{player.totalScore}" />
+		Wins: <h:outputText id="outWins" value="#{player.wins}" />
+		Losses: <h:outputText id="outLosses" value="#{player.losses}" />
+	</h:panelGrid>
+	</h:form>
+	<h:form><h:commandLink action="#{player.logout}" value="Logout" /></h:form>
+	</div>
+	
+	
+	
+	<h:form prependId="false"  >
+		<h:commandButton id="playButton" action="#{player.playGame}" value="Play" />
+	</h:form>
+	
+	
+	<h:dataTable id="leaderBoard" value="#{player.leaderBoard}" var="entry">
+		<h:column>
+			<f:facet name="header">Ranking</f:facet>
+			#{entry.rank}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Player Name</f:facet>
+			#{entry.username}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Total Score</f:facet>
+			#{entry.totalScore}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Wins</f:facet>
+			#{entry.wins}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Losses</f:facet>
+			#{entry.losses}
+		</h:column>
+	</h:dataTable>
+	
+
+<h:outputScript library="js" name="home_script.js"></h:outputScript>
+
+</h:body>
+   
+</html>
