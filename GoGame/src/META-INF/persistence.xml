@@ -6,6 +6,7 @@
 		<class>comp303project.User</class>
 		<class>comp303project.Gogame</class>
 		
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 	</persistence-unit>
 </persistence>
