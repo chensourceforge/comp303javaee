@@ -98,13 +98,33 @@ function initVariables(){
         position[row] = [];
         for(col = 0; col < grids; col++){
             position[row][col] = {
-                    occupant: nobody_here,
-                    x: gridSpace * col + gridSpace,
-                    y: gridSpace * row + gridSpace
+                    occupant: nobody_here//,
+                    //x: gridSpace * col + gridSpace,
+                    //y: gridSpace * row + gridSpace
             };
         }
     } 
 } // END - initVariables()
+
+function setBoardOrientation(){
+	if(player.isBlack){
+		// REGULAR
+	    for(row = 0; row < grids; row++){
+	        for(col = 0; col < grids; col++){
+	        	position[row][col].x = gridSpace * col + gridSpace;
+	        	position[row][col].y = gridSpace * row + gridSpace;
+	        }
+	    }
+	} else {
+		// FLIPPED
+		for(row = 0; row < grids; row++){
+	        for(col = 0; col < grids; col++){
+	        	position[row][col].x = gridSpace * (grids - col);
+	        	position[row][col].y = gridSpace * (grids - row);
+	        }
+	    }
+	}
+}
 
 function reInitVariables(){
 	// player
@@ -363,8 +383,6 @@ function onStartStopGameClick(){
 	switch(command){
 		case "Start Game":
 			startGame();
-			// test for ai username --> tester1, tester2, etc.
-			if(player.name.match(/^tester[0-9]+$/)){aiRoutine();}
 			break;
 		case "Quit Game":
 			stopGame();
@@ -373,8 +391,6 @@ function onStartStopGameClick(){
 			break;
 		case "Rematch":
 			reStartGame();
-			// test for ai username --> tester1, tester2, etc.
-			if(player.name.match(/^tester[0-9]+$/)){aiRoutine();}
 			break;
 	}
 }
@@ -386,8 +402,8 @@ function onMouseMoveOverBoard(event){
         
         socket.send(JSON.stringify({
             action: my_move,
-            x: x,
-            y: y
+            x: player.isBlack ? x : canvasWidth - x, // send REGULAR pos to server
+            y: player.isBlack ? y : canvasHeight - y // send REGULAR pos to server
         }));
 		
 		rePaintBoard(); 
@@ -400,8 +416,16 @@ function onMouseClickOnBoard(event){
         
         setPlayerTurn(false);
         
-        row = getRow(event.offsetY);
-        col = getColumn(event.offsetX);
+        if(player.isBlack){
+        	row = getRow(event.offsetY);
+            col = getColumn(event.offsetX);
+        } else {
+        	row = getRow(canvasHeight - event.offsetY);
+            col = getColumn(canvasWidth - event.offsetX);
+        }
+        
+//        row = getRow(event.offsetY);
+//        col = getColumn(event.offsetX);
         
         socket.send(JSON.stringify({
             action: my_click,
@@ -441,9 +465,13 @@ function startWebsocketConnection(){
                 player.opponentName = jsonObj.opponentName;
                 player.isBlack = jsonObj.isBlack;
                 
+                setBoardOrientation();
                 updatePlayersNames();
                 updatePointsFields();                
                 document.getElementById("pointsArea").style.display = "block";
+                
+                // test for ai username --> tester1, tester2, etc.
+    			if(player.name.match(/^tester[0-9]+$/)){aiRoutine();}
                 
                 socket.send(JSON.stringify({action: begin_game}));
                 break;
@@ -460,7 +488,12 @@ function startWebsocketConnection(){
                 break;
             case opponent_move:
                 rePaintBoard();
-                drawOpponentStone(jsonObj.x, jsonObj.y);
+                if(player.isBlack){
+                	drawOpponentStone(jsonObj.x, jsonObj.y);
+                } else {
+                	drawOpponentStone(canvasWidth - jsonObj.x, canvasHeight - jsonObj.y);
+                }
+                //drawOpponentStone(jsonObj.x, jsonObj.y);
                 break;
             case invalid_click:
                 drawRedText("invalid move");
@@ -510,8 +543,13 @@ function startWebsocketConnection(){
             	break;
             case rematch_ready:
                 player.isBlack = jsonObj.isBlack;
+                setBoardOrientation();
                 updatePlayersNames();
-                updatePointsFields();                
+                updatePointsFields();
+                
+                // test for ai username --> tester1, tester2, etc.
+    			if(player.name.match(/^tester[0-9]+$/)){aiRoutine();}
+    			
                 socket.send(JSON.stringify({action: begin_game}));
             	break;
             default:

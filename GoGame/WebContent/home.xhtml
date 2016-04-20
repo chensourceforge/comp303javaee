@@ -14,11 +14,11 @@
 	<div id="loginSection"> <!-- NOT logged in -->
 	<h:form prependId="false">
 	<h:panelGrid>
-		<h:inputText id="username" value="#{player.username}" />
-		<h:inputSecret id="password" value="#{player.password}" />
+		<h:inputText id="username" value="#{player.username}" styleClass="textbox"/>
+		<h:inputSecret id="password" value="#{player.password}" styleClass="textbox"/>
 		<h:messages id="beanMessages" />
 		<h:outputText id="loginError" value="#{player.loginError}" />
-		<h:commandButton value="Log In/Sign Up" >
+		<h:commandButton value="Log In/Sign Up" styleClass="button" >
 			<f:ajax execute="username password" 
 			listener="#{player.login}" 
 			render="beanMessages loginError outUsername outRanking outScore outWins outLosses isLoggedIn leaderBoard"
@@ -30,7 +30,9 @@
 	</div>
 	
 	
-	<div id="playerStatsSection"> <!-- logged in -->
+	
+	<div>
+	<div id="playerStatsSection" style="float:left; border:1px solid black; margin-top: 30px "> <!-- logged in -->
 	<h:form prependId="false">
 	<h:panelGrid columns="2">
 		Player: <h:outputText id="outUsername" value="#{player.username}" />
@@ -40,23 +42,29 @@
 		Losses: <h:outputText id="outLosses" value="#{player.losses}" />
 	</h:panelGrid>
 	</h:form>
-	<h:form><h:commandLink action="#{player.logout}" value="Logout" /></h:form>
+	
+	<h:form><h:commandLink action="#{player.logout}" value="Logout" />
+			<div class="playbutton" align="center">
+	
+	<h:commandButton id="playButton" action="#{player.playGame}" value="Play" styleClass="button" />
+	</div>
+	</h:form>
+			
+				
+	</div>
 	</div>
 	
-	
-	
-	<h:form prependId="false"  >
-		<h:commandButton id="playButton" action="#{player.playGame}" value="Play" />
+	<h:form prependId="false">		
 	</h:form>
 	
-	
+	<div id="leaderBoard" style="float:right; border:1px solid black; margin-top: 35px">
 	<h:dataTable id="leaderBoard" value="#{player.leaderBoard}" var="entry">
 		<h:column>
 			<f:facet name="header">Ranking</f:facet>
 			#{entry.rank}
 		</h:column>
 		<h:column>
-			<f:facet name="header">Player Name</f:facet>
+			<f:facet name="header">Player Name</f:facet><br/>
 			#{entry.username}
 		</h:column>
 		<h:column>
@@ -72,6 +80,8 @@
 			#{entry.losses}
 		</h:column>
 	</h:dataTable>
+	</div>
+	
 	
 
 <h:outputScript library="js" name="home_script.js"></h:outputScript>

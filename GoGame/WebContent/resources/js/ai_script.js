@@ -2,6 +2,7 @@ var aiMoveTimer;
 var aiMoveHistory;
 
 function aiRoutine(){
+	if(aiMoveTimer){clearTimeout(aiMoveTimer);}
 	aiMoveHistory = [];
     for(var row = 0; row < grids; row++){
     	aiMoveHistory[row] = [];
@@ -17,7 +18,7 @@ function aiMove(){
 	if(player.isMyTurn){
 		// simulate move
 		if(aiMoveTimer){clearTimeout(aiMoveTimer);}
-		var destCandidates = [];
+		var destCandidates = new Array();
 	    for(var a = 0; a < grids; a++){
 	        for(var b = 0; b < grids; b++){
 	        	if(position[a][b].occupant === nobody_here && !aiMoveHistory[a][b]){

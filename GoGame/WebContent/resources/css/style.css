@@ -13,6 +13,52 @@
 #status{
 	color: red;
 }
+
 #scene{
 	border: 1px solid #d3d3d3;
 }
+
+.playbutton .button
+{
+    display: inline-block;
+	background-color: #4CAF50;
+    border: none;
+    color: white; 
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
+}
+
+#loginSection .button
+{   font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
+	display: inline-block;
+	background-color: #4CAF50;
+    border: none;
+    color: white;    
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-weight: bold;
+	
+}
+ 
+ 
+#loginSection .textbox { 
+    background: white; 
+    border: 1px solid #DDD; 
+    border-radius: 5px; 
+    box-shadow: 0 0 5px #DDD inset; 
+    color: #666; 
+    outline: none; 
+    height:25px; 
+    width: 200px; 
+} 
+ 
