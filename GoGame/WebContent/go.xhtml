@@ -29,19 +29,49 @@
 						<canvas id="board"></canvas>
 					</td>
 					<td>
-						<div id="pointsArea" style="display: none;">
-							<div>
-								<span id="txtBlackName"></span><br />
-								<h:graphicImage library="img" name="blackIcon.png" />
-								 x <span id="txtBlackPoints"></span>
-							</div>
-							
-							<div>
-								<span id="txtWhiteName"></span><br />
-								<h:graphicImage library="img" name="whiteIcon.png" />
-								 x <span id="txtWhitePoints"></span>
-							</div>
-						</div><!-- pointsArea -->
+						<table>
+							<tr>
+								<td>
+									<div id="pointsArea" style="display: none;">
+										<div>
+											<span id="txtBlackName"></span><br />
+											<h:graphicImage library="img" name="blackIcon.png" />
+											 x <span id="txtBlackPoints"></span>
+										</div>
+										
+										<div>
+											<span id="txtWhiteName"></span><br />
+											<h:graphicImage library="img" name="whiteIcon.png" />
+											 x <span id="txtWhitePoints"></span>
+										</div>
+									</div><!-- pointsArea -->
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<button id="btnRules" onclick="toggleDisplayRules()">Rules</button>
+										<div id="txtRules" style="display: none;">
+											<!-- GAME RULES GO HERE -->
+											<ul>
+												<li>Capture as much territory on the board as possible</li>
+												<li>Make moves by placing a stone on an intersection.</li>
+												<li>A move can be made on any vacant intersection.</li>
+												<li>Points within a zone with no paths available to connect with another of its colour are "captured".</li>
+												<li>Stones must remain in their played positions unless captured, when they are removed from the board.</li>
+												<li>Black plays first.</li>
+												<li> 
+													<p>One may not play a move which repeats the previous board position. In other words, if your piece</p>
+													<p>was captured form a position, you may not place another piece in that position on your next turn.</p>
+												</li>
+											</ul>
+										</div><!-- txtRules -->
+																			
+									</div>
+								</td>
+							</tr>
+						</table>
+						
 					</td>
 				</tr>
 			
