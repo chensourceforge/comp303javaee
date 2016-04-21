@@ -34,13 +34,13 @@
 								<td>
 									<div id="pointsArea" style="display: none;">
 										<div>
-											<span id="txtBlackName"></span><br />
+											<span id="txtBlackName" onmouseover="onHoverName(this)"></span><br />
 											<h:graphicImage library="img" name="blackIcon.png" />
 											 x <span id="txtBlackPoints"></span>
 										</div>
 										
 										<div>
-											<span id="txtWhiteName"></span><br />
+											<span id="txtWhiteName" onmouseover="onHoverName(this)"></span><br />
 											<h:graphicImage library="img" name="whiteIcon.png" />
 											 x <span id="txtWhitePoints"></span>
 										</div>
@@ -99,6 +99,32 @@
 			
 		
 		</div>
+		
+		
+		<!-- opponent info on hover -->
+		<div id="secOpponentInfo" style="display: none;">
+			<h:form prependId="false">
+				
+				<h:panelGrid columns="2">
+					Current ranking: <h:outputText id="oppRanking" value="#{player.opponentRanking}" />
+					Total score: <h:outputText id="oppScore" value="#{player.opponentTotalScore}" />
+					Wins: <h:outputText id="oppWins" value="#{player.opponentWins}" />
+					Losses: <h:outputText id="oppLosses" value="#{player.opponentLosses}" />
+				</h:panelGrid>
+				
+				
+				<h:inputHidden id="txtOpponentName" value="#{player.opponentName}" />
+				<h:commandButton id="btnGetOppInfo" style="display: none;">
+					<f:ajax  
+						execute="txtOpponentName" 
+						listener="#{player.onRequestOpponentInfo}" 
+						onevent="onOpponentInfoReceived" 
+						render="oppRanking oppScore oppWins oppLosses" />
+				</h:commandButton>
+				
+			</h:form>
+		</div>
+		
 	</div>
 	
 	

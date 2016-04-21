@@ -48,6 +48,12 @@ public class PlayerBean implements Serializable {
 	private boolean isLoggedIn = false;
 	//private int rank;
 	
+	private String opponentName;
+	private int opponentTotalScore;
+	private int opponentWins;
+	private int opponentLosses;
+	private int opponentRanking;
+	
 	//@Inject
 	DAOBean daoBean;
 	
@@ -93,7 +99,7 @@ public class PlayerBean implements Serializable {
 //			// login success
 //			//playerStats = daoBean.findGogame(username);
 //		}
-		
+		username = user.getUsername();
 		isLoggedIn = true;
 	}
 	
@@ -110,6 +116,14 @@ public class PlayerBean implements Serializable {
 		} else {
 			return "";
 		}
+	}
+	
+	public void onRequestOpponentInfo(AjaxBehaviorEvent event) {
+	    Gogame opp = daoBean.findGogame(opponentName);
+	    this.opponentRanking = daoBean.getRanking(opp);
+	    this.opponentTotalScore = opp.getTotalScore();
+	    this.opponentWins = opp.getWins();
+	    this.opponentLosses = opp.getLosses();
 	}
 
 	
@@ -190,6 +204,46 @@ public class PlayerBean implements Serializable {
 		} else {
 			return 0;
 		}
+	}
+
+	public String getOpponentName() {
+		return opponentName;
+	}
+
+	public void setOpponentName(String opponentName) {
+		this.opponentName = opponentName;
+	}
+
+	public int getOpponentTotalScore() {
+		return opponentTotalScore;
+	}
+
+	public void setOpponentTotalScore(int opponentTotalScore) {
+		this.opponentTotalScore = opponentTotalScore;
+	}
+
+	public int getOpponentWins() {
+		return opponentWins;
+	}
+
+	public void setOpponentWins(int opponentWins) {
+		this.opponentWins = opponentWins;
+	}
+
+	public int getOpponentLosses() {
+		return opponentLosses;
+	}
+
+	public void setOpponentLosses(int opponentLosses) {
+		this.opponentLosses = opponentLosses;
+	}
+
+	public int getOpponentRanking() {
+		return opponentRanking;
+	}
+
+	public void setOpponentRanking(int opponentRanking) {
+		this.opponentRanking = opponentRanking;
 	}
 }
 
