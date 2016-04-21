@@ -359,6 +359,20 @@ function toggleDisplayRules(){
 	else {document.getElementById("txtRules").style.display = "none";}
 }
 
+function onHoverName(elem){
+	document.getElementById("txtOpponentName").value = elem.innerHTML;
+	document.getElementById("btnGetOppInfo").click();
+}
+
+function onOpponentInfoReceived(data){
+	if(data.status === 'success'){
+		document.getElementById("secOpponentInfo").style.display = "";
+		setTimeout(function(){
+			document.getElementById("secOpponentInfo").style.display = "none";
+		}, 2000);
+	}
+}
+
 function onBoardSpecsChange(numGrids){
     // canvas
     canvasWidth = 500;
